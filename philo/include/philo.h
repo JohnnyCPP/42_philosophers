@@ -14,5 +14,8 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <limits.h>
+# include "ph_constants.h"
+# include "ph_prototypes.h"
 
 #endif
