@@ -16,10 +16,6 @@ static int	ph_is_number(char *arg)
 	int	i;
 
 	i = 0;
-	if (arg[i] == '-')
-		i ++;
-	if (arg[i] == '\0')
-		return (EXIT_FAILURE);
 	while (arg[i] != '\0')
 	{
 		if (!ft_isdigit(arg[i]))
