@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   ph_allocate_philo_memory.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,23 +9,20 @@
 /*   Updated: 2024/09/29 08:46:34 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef PHILO_H
-# define PHILO_H
+#include "philo.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-//	includes "intptr_t"
-# include <stdint.h>
-//	includes "usleep()"
-# include <unistd.h>
-# include <limits.h>
-//	includes "pthread_mutex_t", mutex functions, and thread functions
-# include <pthread.h>
-//	includes "struct timeval" and "gettimeofday()"
-# include <sys/time.h>
-# include "ph_constants.h"
-# include "ph_structures.h"
-# include "ph_prototypes.h"
-# include "ph_prototypes_2.h"
+int	ph_allocate_philo_memory(t_simulation *simulation)
+{
+	size_t	amount;
+	size_t	size;
 
-#endif
+	amount = simulation->philo_amount;
+	size = sizeof(t_philosopher);
+	simulation->philosophers = (t_philosopher *) ft_calloc(amount, size);
+	if (!simulation->philosophers)
+	{
+		printf(ERROR_MEMORY);
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}

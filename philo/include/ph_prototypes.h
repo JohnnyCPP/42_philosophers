@@ -13,6 +13,161 @@
 # define PH_PROTOTYPES_H
 
 /**
+ * @brief Updates the time by which a given philosopher ate.
+ *
+ * @param philosopher The philosopher to update meal time to.
+ */
+void	ph_update_meal_time(t_philosopher *philosopher);
+
+/**
+ * @brief Checks if a character is a plus or minus sign.
+ *
+ * @param character The character.
+ *
+ * @return 1 if it's a sign, 0 if it's not.
+ */
+int		ft_issign(const char character);
+
+/**
+ * @brief Checks if a character is a space.
+ *
+ * @param character The character.
+ *
+ * @return 1 if it's a space, 0 if it's not.
+ */
+int		ft_isspace(const char character);
+
+/**
+ * @brief Prints a status message on the terminal, for a given philosopher.
+ *
+ * @param data Thread data structure containing the philosopher number.
+ * @param format The format string to be printed.
+ *
+ * If an error occurs attempting to get the current time, exits silently.
+ */
+void	ph_display_status(t_thread_data *data, const char *format);
+
+/**
+ * @brief Allocates a block of memory for a t_thread_data structure.
+ *
+ * @param data A double pointer to the structure to allocate.
+ * @param sim The simulation context.
+ *
+ * @return EXIT_SUCCESS if the allocation was successful.
+ *         EXIT_FAILURE if "data" is not a valid pointer, or 
+ *         the allocation was unsuccessful.
+ *
+ * The allocated block of memory will be of "philo_amount" length.
+ * This function will also populate the block of memory, assigning the 
+ * "philosopher" number to each structure, and the simulation context 
+ * to the "simulation" member.
+ */
+int		ph_allocate_thread_data(t_thread_data **data, t_simulation *sim);
+
+/**
+ * @brief Waits a given amount of milliseconds.
+ *
+ * @param ms Amount of milliseconds to wait.
+ *
+ * @return Always EXIT_SUCCESS.
+ */
+int		ph_wait_ms(int ms);
+
+/**
+ * @brief Destroys only the mutexes related to the forks.
+ *
+ * @param simulation Structure containing the mutexes to be destroyed.
+ */
+void	ph_destroy_philo_mutexes(t_simulation *simulation);
+
+/**
+ * @brief Destroys all mutexes.
+ *
+ * @param simulation Structure containing the mutexes to be destroyed.
+ */
+void	ph_destroy_mutexes(t_simulation *simulation);
+
+/**
+ * @brief Makes philosophers eat, sleep, and think.
+ *
+ * @param data Is a pointer to the thread data.
+ *
+ * @return EXIT_SUCCESS if no error occurred. Otherwise, EXIT_FAILURE.
+ *
+ * This function creates a thread for each philosopher, whose calling 
+ * function is "ph_philo_actions()".
+ *
+ * Note that this function also computes the start time of the simulation, 
+ * since it should start as close as the first thread is created.
+ */
+int		ph_run_threads(t_thread_data *data);
+
+/**
+ * @brief A philosopher eats, sleeps, and finally thinks.
+ *
+ * @param arg Is a pointer to a "t_thread_data" struct.
+ *
+ * @return EXIT_SUCCESS casted to a pointer to void if success.
+ *         EXIT_FAILURE casted to a pointer to void, in case of error.
+ *
+ * The "t_thread_data" struct contains the simulation context and 
+ * the number of philosopher.
+ */
+void	*ph_philo_actions(void *arg);
+
+/**
+ * @brief Initializes mutexes (forks) and handles errors.
+ *
+ * @param simulation Structure containing the philosophers and their forks.
+ *
+ * @return EXIT_SUCCESS if success, EXIT_FAILURE if an error occurs.
+ */
+int		ph_initialize_mutexes(t_simulation *simulation);
+
+/**
+ * @brief Allocates memory for philosophers in a simulation.
+ *
+ * @param simulation Structure containing the philosophers to allocate.
+ *
+ * @return EXIT_SUCCESS if allocation was a success, EXIT_FAILURE otherwise.
+ */
+int		ph_allocate_philo_memory(t_simulation *simulation);
+
+/**
+ * @brief Allocates memory for an array and initializes all bytes to zero.
+ *
+ * @param amount The number of elements to allocate.
+ * @param size The size of each element in bytes.
+ *
+ * @return A pointer to the allocated memory, or NULL if the allocation fails.
+ */
+void	*ft_calloc(size_t amount, size_t size);
+
+/**
+ * @brief Fills starting values of the simulation.
+ *
+ * @param argc Argument count, represents the amount of arguments 
+ *             passed to the program, including the program name.
+ * @param argv Argument vector, a double pointer to the program arguments.
+ * @param simulation Structure used to store data used through the simulation.
+ */
+void	ph_parse_arguments(int argc, char **argv, t_simulation *simulation);
+
+/**
+ * @brief Converts a string to an integer.
+ *
+ * @param value A pointer to the string containing the number to be converted.
+ *
+ * @return The integer value represented by the string,
+ *         or 0 if the string doesn't contain a valid number.
+ *
+ * This function converts the initial portion of the string pointed to
+ * by "value" to an integer. It handles optional leading spaces,
+ * an optional sign ('+' or '-'), and numeric characters.
+ */
+int		ft_atoi(const char *value);
+
+/**
  * @brief Checks if a character is a digit.
  *
  * @param character The character.

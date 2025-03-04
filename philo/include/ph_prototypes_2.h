@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   ph_prototypes_2.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,23 +9,19 @@
 /*   Updated: 2024/09/29 08:46:34 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PH_PROTOTYPES_2_H
+# define PH_PROTOTYPES_2_H
 
-# include <stdio.h>
-# include <stdlib.h>
-//	includes "intptr_t"
-# include <stdint.h>
-//	includes "usleep()"
-# include <unistd.h>
-# include <limits.h>
-//	includes "pthread_mutex_t", mutex functions, and thread functions
-# include <pthread.h>
-//	includes "struct timeval" and "gettimeofday()"
-# include <sys/time.h>
-# include "ph_constants.h"
-# include "ph_structures.h"
-# include "ph_prototypes.h"
-# include "ph_prototypes_2.h"
+/**
+ * @brief Gets the interval of milliseconds passed from the beginning.
+ *
+ * @param simulation The simulation context, containing time intervals.
+ *
+ * @return The amount of milliseconds passed. If an error occurs trying to
+ *         get the current time, returns DELTA_TIME_FAILURE.
+ *
+ * This function also updates the "current_time" member of the simulation.
+ */
+long long	ph_get_delta_time(t_simulation *simulation);
 
 #endif

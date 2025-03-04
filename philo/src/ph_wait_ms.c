@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   ph_wait_ms.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,23 +9,21 @@
 /*   Updated: 2024/09/29 08:46:34 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef PHILO_H
-# define PHILO_H
+#include "philo.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-//	includes "intptr_t"
-# include <stdint.h>
-//	includes "usleep()"
-# include <unistd.h>
-# include <limits.h>
-//	includes "pthread_mutex_t", mutex functions, and thread functions
-# include <pthread.h>
-//	includes "struct timeval" and "gettimeofday()"
-# include <sys/time.h>
-# include "ph_constants.h"
-# include "ph_structures.h"
-# include "ph_prototypes.h"
-# include "ph_prototypes_2.h"
+int	ph_wait_ms(int ms)
+{
+	int	error_code;
 
-#endif
+	while (ms > 0)
+	{
+		error_code = usleep(MICROSECONDS_IN_A_MILLISECOND);
+		if (error_code)
+		{
+			printf(ERROR_WAIT);
+			error_code = RESET_ERROR_CODE;
+		}
+		ms --;
+	}
+	return (EXIT_SUCCESS);
+}

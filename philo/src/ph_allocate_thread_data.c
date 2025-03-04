@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ph_allocate_thread_data.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,34 +11,34 @@
 /* ************************************************************************** */
 #include "philo.h"
 
-int	main(int argc, char **argv)
+static	void	ph_assign_data(t_thread_data *data, t_simulation *simulation)
 {
-	t_thread_data	*data;
-	t_simulation	simulation;
+	size_t	i;
 
-	if (ph_validate_args(argc, argv) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	ph_parse_arguments(argc, argv, &simulation);
-	if (ph_allocate_philo_memory(&simulation) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (ph_initialize_mutexes(&simulation) == EXIT_FAILURE)
+	i = 0;
+	while (i < simulation->philo_amount)
 	{
-		free(simulation.philosophers);
+		data[i].philosopher = i;
+		data[i].simulation = simulation;
+		i ++;
+	}
+}
+
+int	ph_allocate_thread_data(t_thread_data **data, t_simulation *sim)
+{
+	size_t	amount;
+	size_t	size;
+
+	if (!data)
+		return (EXIT_FAILURE);
+	amount = sim->philo_amount;
+	size = sizeof(t_thread_data);
+	*data = (t_thread_data *) ft_calloc(amount, size);
+	if (!*data)
+	{
+		printf(ERROR_DATA_MEM);
 		return (EXIT_FAILURE);
 	}
-	if (ph_allocate_thread_data(&data, &simulation) == EXIT_FAILURE)
-	{
-		ph_destroy_mutexes(&simulation);
-		free(simulation.philosophers);
-		return (EXIT_FAILURE);
-	}
-	if (ph_run_threads(data) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	//			4. end the simulation when:
-	//				- philosophers have eaten the required amount of meals
-	//				- a philosopher dies
-	//			5. join all threads
-	//			6. delete all mutexes
-	//			7. free dynamic memory
+	ph_assign_data(*data, sim);
 	return (EXIT_SUCCESS);
 }

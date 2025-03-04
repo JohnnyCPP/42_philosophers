@@ -61,5 +61,7 @@ int	ph_validate_args(int argc, char **argv)
 		printf(ERROR_NUMS);
 		return (EXIT_FAILURE);
 	}
+	if (ft_atoi(argv[ARG_PHILOSOPHERS]) == ZERO_PHILOSOPHERS)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   ph_parse_arguments.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,23 +9,16 @@
 /*   Updated: 2024/09/29 08:46:34 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef PHILO_H
-# define PHILO_H
+#include "philo.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-//	includes "intptr_t"
-# include <stdint.h>
-//	includes "usleep()"
-# include <unistd.h>
-# include <limits.h>
-//	includes "pthread_mutex_t", mutex functions, and thread functions
-# include <pthread.h>
-//	includes "struct timeval" and "gettimeofday()"
-# include <sys/time.h>
-# include "ph_constants.h"
-# include "ph_structures.h"
-# include "ph_prototypes.h"
-# include "ph_prototypes_2.h"
-
-#endif
+void	ph_parse_arguments(int argc, char **argv, t_simulation *simulation)
+{
+	simulation->philo_amount = (size_t) ft_atoi(argv[ARG_PHILOSOPHERS]);
+	simulation->die_time = ft_atoi(argv[ARG_DIE_TIME]);
+	simulation->eat_time = ft_atoi(argv[ARG_EAT_TIME]);
+	simulation->sleep_time = ft_atoi(argv[ARG_SLEEP_TIME]);
+	if (argc == MAX_ARGS)
+		simulation->meals = ft_atoi(argv[ARG_EAT_AMOUNT]);
+	else
+		simulation->meals = MEALS_DEFAULT;
+}
