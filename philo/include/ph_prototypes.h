@@ -13,11 +13,32 @@
 # define PH_PROTOTYPES_H
 
 /**
+ * @brief Releases both forks.
+ *
+ * @param l Left fork.
+ * @param r Right fork.
+ */
+void	ph_release_f(pthread_mutex_t *l, pthread_mutex_t *r);
+
+/**
  * @brief Joins all threads, deletes mutexes, and frees heap memory.
  *
  * @param data Structure containing the philosophers and app context.
  */
 void	ph_end_simulation(t_thread_data *data);
+
+/**
+ * @brief A philosopher gets forks, eats, and releases them.
+ *
+ * @param data Context that contains the philosopher number.
+ * @param l Left fork.
+ * @param r Right fork.
+ *
+ * @return EXIT_SUCCESS if the philosopher can continue the simulation.
+ *         EXIT_FAILURE if there's only one philosopher, or 
+ *         the simulation can't continue.
+ */
+int		ph_eat(t_thread_data *data, pthread_mutex_t *l, pthread_mutex_t *r);
 
 /**
  * @brief Checks if a philosopher is still eating.

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_display_status.c                                :+:      :+:    :+:   */
+/*   ph_release_f.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,32 +11,20 @@
 /* ************************************************************************** */
 #include "philo.h"
 
-static void	ph_unlock_display(t_thread_data *data)
+void	ph_release_f(pthread_mutex_t *l, pthread_mutex_t *r)
 {
-	int			error_code;
+	int	error_code;
 
-	error_code = pthread_mutex_unlock(&data->simulation->attempt_to_print);
+	error_code = pthread_mutex_unlock(l);
 	if (error_code)
-		printf(ERROR_UNLOCK_DISPLAY);
-}
-
-static void	ph_lock_display(t_thread_data *data)
-{
-	int			error_code;
-
-	error_code = pthread_mutex_lock(&data->simulation->attempt_to_print);
+	{
+		printf(ERROR_RELEASE_LEFT);
+		error_code = 0;
+	}
+	error_code = pthread_mutex_unlock(r);
 	if (error_code)
-		printf(ERROR_LOCK_DISPLAY);
-}
-
-void	ph_display_status(t_thread_data *data, const char *format)
-{
-	long long	delta_time;
-
-	ph_lock_display(data);
-	delta_time = ph_get_delta_time(data->simulation);
-	if (delta_time == DELTA_TIME_FAILURE)
-		return ;
-	printf(format, delta_time, data->philosopher + 1);
-	ph_unlock_display(data);
+	{
+		printf(ERROR_RELEASE_RIGHT);
+		error_code = 0;
+	}
 }

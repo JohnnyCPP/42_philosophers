@@ -11,30 +11,40 @@
 /* ************************************************************************** */
 #include "philo.h"
 
+int	ph_simulate(t_thread_data *data, t_simulation *sim, size_t i, int end)
+{
+	i = 0;
+	end = TRUE;
+	while (i < sim->philo_amount)
+	{
+		if (ph_philo_starved(sim, i))
+		{
+			ph_display_status(&data[i], STATUS_DIED);
+			ph_kill_philosopher(sim, i);
+			return (EXIT_FAILURE);
+		}
+		if (ph_not_finished(sim, i))
+			end = FALSE;
+		i ++;
+	}
+	if (sim->meals != MEALS_DEFAULT && end)
+	{
+		sim->all_ate = TRUE;
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
+
 void	ph_start_simulation(t_thread_data *data)
 {
 	t_simulation	*simulation;
 	size_t			i;
-	int				finished_eating;
+	int				end;
 
-	simulation = data[0].simulation;
+	i = 0;
+	end = 0;
+	simulation = data[i].simulation;
 	while (simulation->all_alive)
-	{
-		i = 0;
-		finished_eating = TRUE;
-		while (i < simulation->philo_amount)
-		{
-			if (ph_philo_starved(simulation, i))
-			{
-				ph_display_status(&data[i], STATUS_DIED);
-				ph_kill_philosopher(simulation, i);
-				break ;
-			}
-			if (ph_not_finished(simulation, i))
-				finished_eating = FALSE;
-			i ++;
-		}
-		if (simulation->meals != MEALS_DEFAULT && finished_eating)
-			simulation->all_ate = TRUE;
-	}
+		if (ph_simulate(data, simulation, i, end) == EXIT_FAILURE)
+			break ;
 }

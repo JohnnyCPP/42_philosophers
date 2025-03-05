@@ -11,50 +11,6 @@
 /* ************************************************************************** */
 #include "philo.h"
 
-void	ph_release_f(t_thread_data *d, pthread_mutex_t *l, pthread_mutex_t *r)
-{
-	int	error_code;
-
-	error_code = pthread_mutex_unlock(l);
-	if (error_code)
-	{
-		printf(ERROR_RELEASE_LEFT);
-		error_code = 0;
-	}
-	error_code = pthread_mutex_unlock(r);
-	if (error_code)
-	{
-		printf(ERROR_RELEASE_RIGHT);
-		error_code = 0;
-	}
-	error_code = pthread_mutex_unlock(&d->simulation->attempt_to_forks);
-	if (error_code)
-		printf(ERROR_RELEASE_FORKS);
-}
-
-void	ph_get_forks(t_thread_data *d, pthread_mutex_t *l, pthread_mutex_t *r)
-{
-	int	error_code;
-
-	error_code = pthread_mutex_lock(&d->simulation->attempt_to_forks);
-	if (error_code)
-	{
-		printf(ERROR_GET_FORKS);
-		error_code = 0;
-	}
-	error_code = pthread_mutex_lock(l);
-	if (error_code)
-	{
-		printf(ERROR_LEFT_FORK);
-		error_code = 0;
-	}
-	ph_display_status(d, STATUS_TOOK_FORK);
-	error_code = pthread_mutex_lock(r);
-	if (error_code)
-		printf(ERROR_RIGHT_FORK);
-	ph_display_status(d, STATUS_TOOK_FORK);
-}
-
 void	*ph_philo_actions(void *arg)
 {
 	t_thread_data	*data;
@@ -68,14 +24,14 @@ void	*ph_philo_actions(void *arg)
 	right_fork = &data->simulation->philosophers[next].fork;
 	while (data->simulation->all_alive && !data->simulation->all_ate)
 	{
-		ph_get_forks(data, left_fork, right_fork);
-		ph_update_meal_time(&data->simulation->philosophers[data->philosopher]);
-		data->simulation->philosophers[data->philosopher].meals_amount ++;
-		ph_display_status(data, STATUS_IS_EATING);
-		ph_wait_ms(data->simulation->eat_time);
-		ph_release_f(data, left_fork, right_fork);
+		if (ph_eat(data, left_fork, right_fork) == EXIT_FAILURE)
+			break ;
 		ph_display_status(data, STATUS_IS_SLEEPING);
+		if (!data->simulation->all_alive || data->simulation->all_ate)
+			break ;
 		ph_wait_ms(data->simulation->sleep_time);
+		if (!data->simulation->all_alive || data->simulation->all_ate)
+			break ;
 		ph_display_status(data, STATUS_IS_THINKING);
 	}
 	return ((void *) THREAD_EXIT_SUCCESS);
