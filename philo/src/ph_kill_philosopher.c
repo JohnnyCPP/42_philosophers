@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ph_kill_philosopher.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,30 +11,8 @@
 /* ************************************************************************** */
 #include "philo.h"
 
-int	main(int argc, char **argv)
+void	ph_kill_philosopher(t_simulation *simulation, size_t i)
 {
-	t_thread_data	*data;
-	t_simulation	simulation;
-
-	if (ph_validate_args(argc, argv) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	ph_parse_arguments(argc, argv, &simulation);
-	if (ph_allocate_philo_memory(&simulation) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (ph_initialize_mutexes(&simulation) == EXIT_FAILURE)
-	{
-		free(simulation.philosophers);
-		return (EXIT_FAILURE);
-	}
-	if (ph_allocate_thread_data(&data, &simulation) == EXIT_FAILURE)
-	{
-		ph_destroy_mutexes(&simulation);
-		free(simulation.philosophers);
-		return (EXIT_FAILURE);
-	}
-	if (ph_run_threads(data) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	ph_start_simulation(data);
-	ph_end_simulation(data);
-	return (EXIT_SUCCESS);
+	simulation->philosophers[i].is_dead = STATUS_DEAD;
+	simulation->all_alive = FALSE;
 }

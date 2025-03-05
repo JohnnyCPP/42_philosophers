@@ -42,12 +42,16 @@ static	void	ph_set_start_meal_time(t_simulation *simulation, size_t i)
 
 	philosopher = &simulation->philosophers[i];
 	philosopher->meal_time = simulation->start_time;
+	philosopher->meals_amount = STARTING_MEALS_AMOUNT;
+	philosopher->is_dead = STATUS_ALIVE;
 }
 
 static	int	ph_compute_start_time(t_simulation *simulation)
 {
 	int	is_failure;
 
+	simulation->all_alive = TRUE;
+	simulation->all_ate = FALSE;
 	is_failure = gettimeofday(&simulation->start_time, NULL);
 	if (is_failure)
 	{

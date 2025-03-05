@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ph_start_simulation.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,30 +11,30 @@
 /* ************************************************************************** */
 #include "philo.h"
 
-int	main(int argc, char **argv)
+void	ph_start_simulation(t_thread_data *data)
 {
-	t_thread_data	*data;
-	t_simulation	simulation;
+	t_simulation	*simulation;
+	size_t			i;
+	int				finished_eating;
 
-	if (ph_validate_args(argc, argv) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	ph_parse_arguments(argc, argv, &simulation);
-	if (ph_allocate_philo_memory(&simulation) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (ph_initialize_mutexes(&simulation) == EXIT_FAILURE)
+	simulation = data[0].simulation;
+	while (simulation->all_alive)
 	{
-		free(simulation.philosophers);
-		return (EXIT_FAILURE);
+		i = 0;
+		finished_eating = TRUE;
+		while (i < simulation->philo_amount)
+		{
+			if (ph_philo_starved(simulation, i))
+			{
+				ph_display_status(&data[i], STATUS_DIED);
+				ph_kill_philosopher(simulation, i);
+				break ;
+			}
+			if (ph_not_finished(simulation, i))
+				finished_eating = FALSE;
+			i ++;
+		}
+		if (simulation->meals != MEALS_DEFAULT && finished_eating)
+			simulation->all_ate = TRUE;
 	}
-	if (ph_allocate_thread_data(&data, &simulation) == EXIT_FAILURE)
-	{
-		ph_destroy_mutexes(&simulation);
-		free(simulation.philosophers);
-		return (EXIT_FAILURE);
-	}
-	if (ph_run_threads(data) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	ph_start_simulation(data);
-	ph_end_simulation(data);
-	return (EXIT_SUCCESS);
 }

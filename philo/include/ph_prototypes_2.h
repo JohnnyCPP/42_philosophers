@@ -13,6 +13,16 @@
 # define PH_PROTOTYPES_2_H
 
 /**
+ * @brief Converts a mix of seconds and microseconds into milliseconds.
+ *
+ * @param s Seconds.
+ * @param microseconds Microseconds.
+ *
+ * @return The sum of both, in the unit of microseconds.
+ */
+long long	ph_to_milliseconds(long long s, long long microseconds);
+
+/**
  * @brief Gets the interval of milliseconds passed from the beginning.
  *
  * @param simulation The simulation context, containing time intervals.

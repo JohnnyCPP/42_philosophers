@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ph_philo_starved.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,30 +11,31 @@
 /* ************************************************************************** */
 #include "philo.h"
 
-int	main(int argc, char **argv)
+static	long long	ph_diff(struct timeval *end, struct timeval *start)
 {
-	t_thread_data	*data;
-	t_simulation	simulation;
+	long long	delta_time;
+	long long	delta_utime;
 
-	if (ph_validate_args(argc, argv) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	ph_parse_arguments(argc, argv, &simulation);
-	if (ph_allocate_philo_memory(&simulation) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (ph_initialize_mutexes(&simulation) == EXIT_FAILURE)
+	delta_time = (long long)(end->tv_sec - start->tv_sec);
+	delta_utime = (long long)(end->tv_usec - start->tv_usec);
+	if (delta_utime < 0)
 	{
-		free(simulation.philosophers);
-		return (EXIT_FAILURE);
+		delta_time --;
+		delta_utime += MICROSECONDS_IN_A_SECOND;
 	}
-	if (ph_allocate_thread_data(&data, &simulation) == EXIT_FAILURE)
-	{
-		ph_destroy_mutexes(&simulation);
-		free(simulation.philosophers);
-		return (EXIT_FAILURE);
-	}
-	if (ph_run_threads(data) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	ph_start_simulation(data);
-	ph_end_simulation(data);
-	return (EXIT_SUCCESS);
+	return (ph_to_milliseconds(delta_time, delta_utime));
+}
+
+int	ph_philo_starved(t_simulation *sim, size_t i)
+{
+	long long	last_meal;
+	int			is_failure;
+	int			starved;
+
+	is_failure = gettimeofday(&sim->current_time, NULL);
+	if (is_failure)
+		printf(ERROR_CURRENT_TIME);
+	last_meal = ph_diff(&sim->current_time, &sim->philosophers[i].meal_time);
+	starved = last_meal > (long long) sim->die_time;
+	return (starved);
 }

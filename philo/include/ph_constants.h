@@ -77,8 +77,11 @@
 
 /**
  * @brief Used to make infinite loops verbose.
+ *
+ * Also used for meal statuses.
  */
 # define TRUE 1
+# define FALSE 0
 
 /**
  * @brief References the next philosopher.
@@ -133,5 +136,16 @@
  * @brief Returned value from ph_get_delta_time() when an error occurs.
  */
 # define DELTA_TIME_FAILURE -1
+
+/**
+ * @brief Amount of meals set when the simulation starts.
+ */
+# define STARTING_MEALS_AMOUNT 0
+
+/**
+ * @brief Good philo, dead philo.
+ */
+# define STATUS_ALIVE 0
+# define STATUS_DEAD 1
 
 #endif

@@ -13,6 +13,62 @@
 # define PH_PROTOTYPES_H
 
 /**
+ * @brief Joins all threads, deletes mutexes, and frees heap memory.
+ *
+ * @param data Structure containing the philosophers and app context.
+ */
+void	ph_end_simulation(t_thread_data *data);
+
+/**
+ * @brief Checks if a philosopher is still eating.
+ *
+ * @param simulation Structure containing the philosophers.
+ * @param i Index of the specific philosopher to check to.
+ *
+ * @return TRUE if "meals_amount" is less than "meals".
+ *         FALSE if "meals" equals MEALS_DEFAULT, or if 
+ *         "meals_amount" is equal to or greater than "meals".
+ *
+ * "meals_amount" represents the amount of times a philosopher has eatten.
+ * "meals" determines the amount of meals all philosophers must have 
+ * to end the simulation.
+ * MEALS_DEFAULT is the value of "meals" when the optional parameter is 
+ * not specified. If "meals" equals MEALS_DEFAULT, philosophers will 
+ * continue the simulation until one starves.
+ */
+int		ph_not_finished(t_simulation *simulation, size_t i);
+
+/**
+ * @brief Kills a philosopher.
+ *
+ * @param simulation Structure containing the philosophers.
+ * @param i Index of the specific philosopher to kill.
+ *
+ * This function will set "all_alive" to FALSE, terminating all threads.
+ */
+void	ph_kill_philosopher(t_simulation *simulation, size_t i);
+
+/**
+ * @brief Checks if a philosopher starved.
+ *
+ * @param simulation Structure containing the philosophers.
+ * @param i Index of the specific philosopher to check to.
+ *
+ * @return 0 if the philosopher doesn't starve.
+ *         A non-zero value if it does.
+ */
+int		ph_philo_starved(t_simulation *simulation, size_t i);
+
+/**
+ * @brief Loops checking if a philosopher dies or all finished eating.
+ *
+ * @param data Structure containing the philosophers and app context.
+ *
+ * Stops when a philosopher dies or when the meals condition is met.
+ */
+void	ph_start_simulation(t_thread_data *data);
+
+/**
  * @brief Updates the time by which a given philosopher ate.
  *
  * @param philosopher The philosopher to update meal time to.

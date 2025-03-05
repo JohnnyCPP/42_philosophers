@@ -22,6 +22,8 @@ typedef struct s_philosopher
 	struct timeval	meal_time;
 	pthread_t		thread;
 	pthread_mutex_t	fork;
+	int				meals_amount;
+	int				is_dead;
 }				t_philosopher;
 
 /**
@@ -51,6 +53,8 @@ typedef struct s_simulation
 	t_philosopher	*philosophers;
 	pthread_mutex_t	attempt_to_forks;
 	pthread_mutex_t	attempt_to_print;
+	int				all_alive;
+	int				all_ate;
 }				t_simulation;
 
 /**

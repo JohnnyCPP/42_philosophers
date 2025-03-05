@@ -66,10 +66,11 @@ void	*ph_philo_actions(void *arg)
 	left_fork = &data->simulation->philosophers[data->philosopher].fork;
 	next = (data->philosopher + (size_t) NEXT) % data->simulation->philo_amount;
 	right_fork = &data->simulation->philosophers[next].fork;
-	while (TRUE)
+	while (data->simulation->all_alive && !data->simulation->all_ate)
 	{
 		ph_get_forks(data, left_fork, right_fork);
 		ph_update_meal_time(&data->simulation->philosophers[data->philosopher]);
+		data->simulation->philosophers[data->philosopher].meals_amount ++;
 		ph_display_status(data, STATUS_IS_EATING);
 		ph_wait_ms(data->simulation->eat_time);
 		ph_release_f(data, left_fork, right_fork);

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ph_to_milliseconds.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,30 +11,12 @@
 /* ************************************************************************** */
 #include "philo.h"
 
-int	main(int argc, char **argv)
+long long	ph_to_milliseconds(long long s, long long microseconds)
 {
-	t_thread_data	*data;
-	t_simulation	simulation;
+	long long	s_to_ms;
+	long long	microseconds_to_ms;
 
-	if (ph_validate_args(argc, argv) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	ph_parse_arguments(argc, argv, &simulation);
-	if (ph_allocate_philo_memory(&simulation) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (ph_initialize_mutexes(&simulation) == EXIT_FAILURE)
-	{
-		free(simulation.philosophers);
-		return (EXIT_FAILURE);
-	}
-	if (ph_allocate_thread_data(&data, &simulation) == EXIT_FAILURE)
-	{
-		ph_destroy_mutexes(&simulation);
-		free(simulation.philosophers);
-		return (EXIT_FAILURE);
-	}
-	if (ph_run_threads(data) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	ph_start_simulation(data);
-	ph_end_simulation(data);
-	return (EXIT_SUCCESS);
+	s_to_ms = s * MILLISECONDS_IN_A_SECOND;
+	microseconds_to_ms = microseconds / MICROSECONDS_IN_A_MILLISECOND;
+	return (s_to_ms + microseconds_to_ms);
 }
