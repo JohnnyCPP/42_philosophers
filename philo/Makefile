@@ -6,7 +6,7 @@
 #    By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/26 20:27:13 by jonnavar          #+#    #+#              #
-#    Updated: 2024/09/26 20:37:23 by jonnavar         ###   ########.fr        #
+#    Updated: 2025/03/06 17:30:33 by jonnavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ GDB				= gdb
 # both "-g" or "-g3" flags can be used.
 # "-g3" includes everything included with "-g", but with 
 # additional information to debug preprocessor directives
-SANITIZE_FLAGS	= -fsanitize=address ${DEBUG_SYMBOLS}
+SANITIZE_FLAGS	= -fsanitize=thread ${DEBUG_SYMBOLS}
 # "--track-origin=yes" tracks the origin of uninitialized values
 # "-s" display a summary of the results directly in the terminal
 # "--leak-check=full" enable detailed memory leak detection, and 
@@ -120,15 +120,15 @@ ${RE}: ${FCLEAN} ${ALL}
 
 ${CC_SANITIZER}: ${OBJECT_FILES}
 	@${CC} ${CFLAGS} ${SANITIZE_FLAGS} ${OBJECT_FILES} -o ${NAME}
-	@echo "C compiler's sanitizer has been added to debug memory issues."
+	@echo "C compiler's sanitizer has been added to debug thread issues."
 
 
-${VALGRIND}:
-	@${VALGRIND} ${VALGRIND_FLAGS} ./${NAME}
+#${VALGRIND}:
+#	@${VALGRIND} ${VALGRIND_FLAGS} ./${NAME}
 
 
-${GDB}:
-	@${GDB} ./${NAME}
+#${GDB}:
+#	@${GDB} ./${NAME}
 
 
 ${HELP}:
@@ -138,8 +138,6 @@ ${HELP}:
 	@echo "    fclean         - Remove object files and the executable"
 	@echo "    re             - Rebuild the project"
 	@echo "    sanitize       - Build with address sanitizer for debugging"
-	@echo "    valgrind       - Run the program with valgrind"
-	@echo "    gdb            - Run the program with gdb"
 
 
 ${PHONY}: ${STD_PHONY} ${DEBUG_PHONY}

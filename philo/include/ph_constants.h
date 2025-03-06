@@ -6,7 +6,7 @@
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 08:34:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2024/09/29 08:46:34 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:09:17 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PH_CONSTANTS_H
@@ -36,6 +36,8 @@
 # define ERROR_WAIT "Error trying to wait a given amount of time.\n"
 # define ERROR_JOIN "Error joining a thread: error code %i.\n"
 # define ERROR_STATUS_CODE "Thread returned exit status %ld.\n"
+# define ERROR_LOCK_EATING "Error locking eat action with error code %i.\n"
+# define ERROR_UNLOCK_EATING "Error unlocking eat action with error code %i.\n"
 
 /**
  * @brief Philosopher statuses.

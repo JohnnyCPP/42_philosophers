@@ -6,7 +6,7 @@
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 08:34:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/03/06 16:56:18 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:02:43 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PH_STRUCTURES_H
@@ -22,6 +22,7 @@ typedef struct s_philosopher
 	struct timeval	meal_time;
 	pthread_t		thread;
 	pthread_mutex_t	fork;
+	pthread_mutex_t	eating;
 	int				meals_amount;
 	int				is_dead;
 }				t_philosopher;
@@ -51,7 +52,6 @@ typedef struct s_simulation
 	struct timeval	start_time;
 	struct timeval	current_time;
 	t_philosopher	*philosophers;
-	pthread_mutex_t	attempt_to_forks;
 	pthread_mutex_t	attempt_to_print;
 	int				all_alive;
 	int				all_ate;
