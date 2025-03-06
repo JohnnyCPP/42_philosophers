@@ -6,7 +6,7 @@
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 08:34:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2024/09/29 08:46:34 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:56:18 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PH_STRUCTURES_H
@@ -55,6 +55,7 @@ typedef struct s_simulation
 	pthread_mutex_t	attempt_to_print;
 	int				all_alive;
 	int				all_ate;
+	int				start;
 }				t_simulation;
 
 /**

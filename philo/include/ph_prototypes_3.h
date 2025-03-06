@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ph_wait_ms.c                                       :+:      :+:    :+:   */
+/*   ph_prototypes_3.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 08:34:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/03/06 17:18:23 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:06:52 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "philo.h"
+#ifndef PH_PROTOTYPES_3_H
+# define PH_PROTOTYPES_3_H
 
-int	ph_wait_ms(int ms, t_thread_data *data)
-{
-	int	error_code;
+/**
+ * @brief Lock left and right forks, in this order.
+ */
+int	ph_g_f_l(t_thread_data *d, pthread_mutex_t *l, pthread_mutex_t *r, int err);
 
-	while (ms > 0)
-	{
-		if (!data->simulation->all_alive || data->simulation->all_ate)
-			return (EXIT_SUCCESS);
-		error_code = usleep(MICROSECONDS_IN_A_MILLISECOND);
-		if (error_code)
-		{
-			printf(ERROR_WAIT);
-			error_code = RESET_ERROR_CODE;
-		}
-		ms --;
-	}
-	return (EXIT_SUCCESS);
-}
+/**
+ * @brief Lock right and left forks, in this order.
+ */
+int	ph_g_f_r(t_thread_data *d, pthread_mutex_t *l, pthread_mutex_t *r, int err);
+
+#endif

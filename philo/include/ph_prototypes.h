@@ -6,7 +6,7 @@
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 08:34:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2024/09/29 08:46:34 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:18:44 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PH_PROTOTYPES_H
@@ -148,7 +148,7 @@ int		ph_allocate_thread_data(t_thread_data **data, t_simulation *sim);
  *
  * @return Always EXIT_SUCCESS.
  */
-int		ph_wait_ms(int ms);
+int		ph_wait_ms(int ms, t_thread_data *data);
 
 /**
  * @brief Destroys only the mutexes related to the forks.

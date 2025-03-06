@@ -6,7 +6,7 @@
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 08:34:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2024/09/29 08:46:34 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:07:06 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILO_H
@@ -27,5 +27,6 @@
 # include "ph_structures.h"
 # include "ph_prototypes.h"
 # include "ph_prototypes_2.h"
+# include "ph_prototypes_3.h"
 
 #endif

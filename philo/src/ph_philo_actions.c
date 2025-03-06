@@ -6,7 +6,7 @@
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 08:34:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2024/09/29 08:46:34 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:19:38 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -19,6 +19,8 @@ void	*ph_philo_actions(void *arg)
 	size_t			next;
 
 	data = (t_thread_data *) arg;
+	while (!data->simulation->start)
+		usleep(MICROSECONDS_IN_A_MILLISECOND);
 	left_fork = &data->simulation->philosophers[data->philosopher].fork;
 	next = (data->philosopher + (size_t) NEXT) % data->simulation->philo_amount;
 	right_fork = &data->simulation->philosophers[next].fork;
@@ -29,7 +31,7 @@ void	*ph_philo_actions(void *arg)
 		ph_display_status(data, STATUS_IS_SLEEPING);
 		if (!data->simulation->all_alive || data->simulation->all_ate)
 			break ;
-		ph_wait_ms(data->simulation->sleep_time);
+		ph_wait_ms(data->simulation->sleep_time, data);
 		if (!data->simulation->all_alive || data->simulation->all_ate)
 			break ;
 		ph_display_status(data, STATUS_IS_THINKING);

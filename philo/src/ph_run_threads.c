@@ -6,7 +6,7 @@
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 08:34:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2024/09/29 08:46:34 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:59:54 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -52,6 +52,7 @@ static	int	ph_compute_start_time(t_simulation *simulation)
 
 	simulation->all_alive = TRUE;
 	simulation->all_ate = FALSE;
+	simulation->start = FALSE;
 	is_failure = gettimeofday(&simulation->start_time, NULL);
 	if (is_failure)
 	{
@@ -86,5 +87,6 @@ int	ph_run_threads(t_thread_data *data)
 		}
 		i ++;
 	}
+	simulation->start = TRUE;
 	return (EXIT_SUCCESS);
 }
