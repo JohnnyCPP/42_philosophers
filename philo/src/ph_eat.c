@@ -6,7 +6,7 @@
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 08:34:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/03/06 19:12:09 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/03/11 19:46:54 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -48,9 +48,6 @@ int	ph_get_forks(t_thread_data *d, pthread_mutex_t *l, pthread_mutex_t *r)
 	if (ph_simulation_ended(d) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	philo = &d->simulation->philosophers[d->philosopher];
-	error_code = pthread_mutex_lock(&philo->eating);
-	if (error_code)
-		printf(ERROR_LOCK_EATING, error_code);
 	error_code = 0;
 	if (d->philosopher % 2 == 1)
 		ph_g_f_l(d, l, r, error_code);
@@ -62,7 +59,6 @@ int	ph_get_forks(t_thread_data *d, pthread_mutex_t *l, pthread_mutex_t *r)
 int	ph_eat(t_thread_data *data, pthread_mutex_t *l, pthread_mutex_t *r)
 {
 	t_philosopher	*philo;
-	int				error_code;
 
 	if (data->philosopher % 2 == 1)
 		usleep(MICROSECONDS_IN_A_MILLISECOND * 5);
@@ -74,16 +70,10 @@ int	ph_eat(t_thread_data *data, pthread_mutex_t *l, pthread_mutex_t *r)
 	if (!data->simulation->all_alive || data->simulation->all_ate)
 	{
 		ph_release_f(l, r);
-		error_code = pthread_mutex_unlock(&philo->eating);
-		if (error_code)
-			printf(ERROR_UNLOCK_EATING, error_code);
 		return (EXIT_FAILURE);
 	}
 	ph_display_status(data, STATUS_IS_EATING);
 	ph_wait_ms(data->simulation->eat_time, data);
 	ph_release_f(l, r);
-	error_code = pthread_mutex_unlock(&philo->eating);
-	if (error_code)
-		printf(ERROR_UNLOCK_EATING, error_code);
 	return (EXIT_SUCCESS);
 }

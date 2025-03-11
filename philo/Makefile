@@ -6,7 +6,7 @@
 #    By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/26 20:27:13 by jonnavar          #+#    #+#              #
-#    Updated: 2025/03/06 17:30:33 by jonnavar         ###   ########.fr        #
+#    Updated: 2025/03/11 19:36:16 by jonnavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ STD_PHONY		= ${ALL} ${CLEAN} ${FCLEAN} ${RE} ${HELP}
 DEBUG_PHONY		= ${CC_SANITIZER} ${VALGRIND} ${GDB}
 
 
-SOURCE_FILES	= $(wildcard ${SOURCES_PATH}*.c)
+SOURCE_FILES	= ${SOURCES_PATH}main.c ${SOURCES_PATH}ft_atoi.c ${SOURCES_PATH}ft_calloc.c ${SOURCES_PATH}ft_ioverflow.c ${SOURCES_PATH}ft_isdigit.c ${SOURCES_PATH}ft_issign.c ${SOURCES_PATH}ft_isspace.c ${SOURCES_PATH}ph_eat.c ${SOURCES_PATH}ph_allocate_philo_memory.c ${SOURCES_PATH}ph_allocate_thread_data.c ${SOURCES_PATH}ph_destroy_mutexes.c ${SOURCES_PATH}ph_display_status.c ${SOURCES_PATH}ph_end_simulation.c ${SOURCES_PATH}ph_get_delta_time.c ${SOURCES_PATH}ph_get_forks.c ${SOURCES_PATH}ph_initialize_mutexes.c ${SOURCES_PATH}ph_kill_philosopher.c ${SOURCES_PATH}ph_not_finished.c ${SOURCES_PATH}ph_parse_arguments.c ${SOURCES_PATH}ph_philo_actions.c ${SOURCES_PATH}ph_philo_starved.c ${SOURCES_PATH}ph_release_f.c ${SOURCES_PATH}ph_run_threads.c ${SOURCES_PATH}ph_start_simulation.c ${SOURCES_PATH}ph_to_milliseconds.c ${SOURCES_PATH}ph_update_meal_time.c ${SOURCES_PATH}ph_validate_args.c ${SOURCES_PATH}ph_wait_ms.c
 # "patsubst": pattern substitution
 # parameters: pattern, replacement, text
 #

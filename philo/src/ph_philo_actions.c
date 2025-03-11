@@ -6,7 +6,7 @@
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 08:34:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/03/06 17:19:38 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/03/11 20:04:20 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -16,14 +16,12 @@ void	*ph_philo_actions(void *arg)
 	t_thread_data	*data;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	size_t			next;
 
 	data = (t_thread_data *) arg;
 	while (!data->simulation->start)
 		usleep(MICROSECONDS_IN_A_MILLISECOND);
 	left_fork = &data->simulation->philosophers[data->philosopher].fork;
-	next = (data->philosopher + (size_t) NEXT) % data->simulation->philo_amount;
-	right_fork = &data->simulation->philosophers[next].fork;
+	right_fork = data->simulation->philosophers[data->philosopher].r_fork;
 	while (data->simulation->all_alive && !data->simulation->all_ate)
 	{
 		if (ph_eat(data, left_fork, right_fork) == EXIT_FAILURE)
