@@ -6,7 +6,7 @@
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 08:34:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/03/11 20:04:20 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:50:30 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -22,6 +22,8 @@ void	*ph_philo_actions(void *arg)
 		usleep(MICROSECONDS_IN_A_MILLISECOND);
 	left_fork = &data->simulation->philosophers[data->philosopher].fork;
 	right_fork = data->simulation->philosophers[data->philosopher].r_fork;
+	if (data->philosopher % 2 == 1)
+		usleep(MICROSECONDS_IN_A_MILLISECOND);
 	while (data->simulation->all_alive && !data->simulation->all_ate)
 	{
 		if (ph_eat(data, left_fork, right_fork) == EXIT_FAILURE)

@@ -6,7 +6,7 @@
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 08:34:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/03/11 19:50:43 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/03/17 21:18:16 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -34,8 +34,20 @@ int	ph_philo_starved(t_simulation *sim, size_t i)
 
 	is_failure = gettimeofday(&sim->current_time, NULL);
 	if (is_failure)
+	{
 		printf(ERROR_CURRENT_TIME);
+		is_failure = 0;
+	}
+	is_failure = pthread_mutex_lock(&sim->reading_eat_time);
+	if (is_failure)
+	{
+		printf(ERROR_LOCK_MUTEX, is_failure);
+		is_failure = 0;
+	}
 	last_meal = ph_diff(&sim->current_time, &sim->philosophers[i].meal_time);
+	is_failure = pthread_mutex_unlock(&sim->reading_eat_time);
+	if (is_failure)
+		printf(ERROR_UNLOCK_MUTEX, is_failure);
 	starved = last_meal > (long long) sim->die_time;
 	return (starved);
 }

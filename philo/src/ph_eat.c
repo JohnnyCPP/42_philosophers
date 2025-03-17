@@ -6,7 +6,7 @@
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 08:34:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/03/11 19:46:54 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/03/17 21:18:45 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -60,12 +60,10 @@ int	ph_eat(t_thread_data *data, pthread_mutex_t *l, pthread_mutex_t *r)
 {
 	t_philosopher	*philo;
 
-	if (data->philosopher % 2 == 1)
-		usleep(MICROSECONDS_IN_A_MILLISECOND * 5);
 	if (ph_get_forks(data, l, r) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	philo = &data->simulation->philosophers[data->philosopher];
-	ph_update_meal_time(&data->simulation->philosophers[data->philosopher]);
+	ph_update_meal_time(data);
 	data->simulation->philosophers[data->philosopher].meals_amount ++;
 	if (!data->simulation->all_alive || data->simulation->all_ate)
 	{

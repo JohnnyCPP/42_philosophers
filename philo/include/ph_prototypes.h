@@ -6,7 +6,7 @@
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 08:34:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/03/06 17:18:44 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/03/17 21:10:38 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PH_PROTOTYPES_H
@@ -92,9 +92,9 @@ void	ph_start_simulation(t_thread_data *data);
 /**
  * @brief Updates the time by which a given philosopher ate.
  *
- * @param philosopher The philosopher to update meal time to.
+ * @param data Structure containing the philosophers and app context.
  */
-void	ph_update_meal_time(t_philosopher *philosopher);
+void	ph_update_meal_time(t_thread_data *data);
 
 /**
  * @brief Checks if a character is a plus or minus sign.

@@ -6,7 +6,7 @@
 /*   By: jonnavar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 08:34:07 by jonnavar          #+#    #+#             */
-/*   Updated: 2025/03/11 20:04:46 by jonnavar         ###   ########.fr       */
+/*   Updated: 2025/03/17 21:06:53 by jonnavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -36,6 +36,9 @@ int	ph_initialize_mutexes(t_simulation *simulation)
 
 	philosophers = simulation->philosophers;
 	i = 0;
+	error_code = pthread_mutex_init(&simulation->reading_eat_time, NULL);
+	if (error_code)
+		return (EXIT_FAILURE);
 	while (i < simulation->philo_amount)
 	{
 		error_code = pthread_mutex_init(&philosophers[i].fork, NULL);
